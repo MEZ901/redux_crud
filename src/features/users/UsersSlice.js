@@ -8,10 +8,21 @@ export const userSlice = createSlice({
     },
     reducers: {
         addUser: (state, action) => {
-            state.value.push(action.payload)
+            state.value.push(action.payload);
         },
+        deleteUser: (state, action) => {
+            state.value = state.value.filter((user) => user.id !== action.payload.id);
+        },
+        updateUser: (state, action) => {
+            state.value.map(user => {
+                if(user.id == action.payload.id) {
+                    if(action.payload.name != "") user.name = action.payload.name;
+                    if(action.payload.username != "") user.username = action.payload.username;
+                }
+            });
+        }
     }
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, deleteUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
